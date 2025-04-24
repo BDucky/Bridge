@@ -21,7 +21,7 @@ export function MetaMaskConnectButton() {
   };
 
   return (
-    <Button onClick={handleClick} className="flex items-center justify-center gap-2 p-4 h-12">
+    <Button onClick={handleClick} className="flex items-center justify-center gap-2 p-4 h-12 min-w-[200px]">
       <img src={metamaskIcon} alt="MetaMask" className="w-6 h-6 object-contain" />
       {isConnected
         ? `Disconnect (${address?.slice(0, 6)}...)`

@@ -18,7 +18,7 @@ export function PhantomConnectButton() {
   };
 
   return (
-    <Button onClick={handleConnect} className="flex items-center justify-center gap-2 p-4 h-12">
+    <Button onClick={handleConnect} className="flex items-center justify-center gap-2 p-4 h-12 min-w-[200px]">
       <img src={phantomIcon} alt="Phantom" className="w-6 h-6 object-contain" />
       {address ? `Connected: ${address.slice(0, 6)}...` : "Connect Phantom"}
     </Button>
