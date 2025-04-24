@@ -1,5 +1,5 @@
 // 1. Extend window interface
-interface SolanaProvider {
+export interface SolanaProvider {
     isPhantom?: boolean;
     publicKey?: {
       toString(): string;

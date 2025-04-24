@@ -1,9 +1,11 @@
 import { WagmiProvider } from 'wagmi';
 import { wagmiConfig } from './lib/evm';
-import { MetaMaskConnectButton } from './components/metamask/MetamaskConnectButton';
-import { PhantomConnectButton } from './components/phantom/PhantomConnectButton';
-import { useEffect } from 'react';
+import { WalletStatusCard } from './components/WalletStatusCard';
+import { useEffect, useState } from 'react';
 import './App.css'
+import WalletIcon from '@/assets/icons/wallet.svg'; // Use a generic wallet icon or create one
+import { Modal } from './components/ui/Modal';
+import { WalletSelector } from './components/WalletSelector';
 
 function Stars() {
   useEffect(() => {
@@ -24,19 +26,41 @@ function Stars() {
 }
 
 function App() {
+  const [walletType, setWalletType] = useState<'metamask' | 'phantom' | null>(null);
+  const [selectorOpen, setSelectorOpen] = useState(false);
+
   return (
     <WagmiProvider config={wagmiConfig}>
       <Stars />
-      <div className="min-h-screen flex flex-col items-center justify-center space-y-6">
-        <h1 className="text-3xl font-extrabold tracking-tight" style={{textShadow: '0 2px 24px #6b21a8'}}>Web3 Wallet Connect Starter</h1>
-        <div className="flex gap-8">
-          <MetaMaskConnectButton />
-          <PhantomConnectButton />
+      {/* Top Navigation Bar */}
+      <header className="w-full flex items-center justify-between px-8 py-4 fixed top-0 left-0 z-10 bg-gradient-to-b from-black/70 to-transparent">
+        <div className="flex items-center gap-2">
+          <img src={WalletIcon} alt="Wallet" className="w-7 h-7" />
+          <span className="text-xl font-bold tracking-wide text-white drop-shadow">Bridge App</span>
         </div>
-        <div className="card mt-8">
-          <p>Connect your favorite wallet and explore the galaxy of Web3!</p>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setSelectorOpen(true)}
+            className="rounded-lg px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white font-semibold flex items-center gap-2 shadow border border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><rect width="20" height="20" rx="5" fill="#fff" fillOpacity="0.12"/><path d="M6 8.5A2.5 2.5 0 0 1 8.5 6h3A2.5 2.5 0 0 1 14 8.5v3A2.5 2.5 0 0 1 11.5 14h-3A2.5 2.5 0 0 1 6 11.5v-3Z" fill="#a78bfa"/><circle cx="12.5" cy="10" r="1" fill="#a78bfa"/></svg>
+            {walletType ? (walletType === 'metamask' ? 'MetaMask' : 'Phantom') : 'Connect Wallet'}
+          </button>
         </div>
-      </div>
+      </header>
+      {/* Wallet Selector Modal */}
+      <Modal open={selectorOpen} onClose={() => setSelectorOpen(false)}>
+        <WalletSelector onSelect={(value) => {
+          setWalletType(value);
+          setSelectorOpen(false);
+        }} onConnected={() => setSelectorOpen(false)} />
+      </Modal>
+      {/* Main Content */}
+      <main className="flex flex-col items-center justify-center min-h-screen pt-32 pb-12">
+        <WalletStatusCard />
+        {/* Placeholder for future bridge functionality */}
+        <div className="mt-12 text-lg text-purple-200/70 italic opacity-80">Main bridge features coming soon...</div>
+      </main>
     </WagmiProvider>
   );
 }

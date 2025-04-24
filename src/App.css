@@ -80,14 +80,3 @@ body {
 .read-the-docs {
   color: #888;
 }
-
-.phantom-btn:hover, .metamask-btn:hover {
-  box-shadow: 0 0 16px 2px #a78bfa55, 0 2px 16px 0 #0008;
-  background: #241f37;
-  transform: translateY(-2px) scale(1.03);
-  transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
-}
-
-.metamask-btn:active, .phantom-btn:active {
-  transform: scale(0.98);
-}
